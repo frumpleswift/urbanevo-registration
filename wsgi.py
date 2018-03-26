@@ -22,7 +22,7 @@ def verifyEmail(email):
 	session = requests.Session()
 	r = session.get('https://www.wellnessliving.com/selfsignup/37RrPjmtY')
 	
-	tree=html.fromstring(r.content.replace('\\',''))
+	tree=html.fromstring(r.text.replace('\\',''))
 	
 	controller=tree.xpath("//script[contains(.,'Ajax._startup')]/text()")
 	ajaxID=str(controller[0]).split("'")[1]
@@ -37,7 +37,7 @@ def verifyEmail(email):
 
 	r=session.post("https://www.wellnessliving.com/a/ajax.html",data=emailData)
 
-	return r.content
+	return r.text
 
 
 def createUser(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gender,address,city,postal,location,signature,city_code=27495):
@@ -45,8 +45,8 @@ def createUser(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,ge
 	session = requests.Session()
 	r = session.get('https://www.wellnessliving.com/Wl/Selfsignup.html?a-ajax=1&id_page=1&s_secret=37RrPjmtY&uid=0&a-ajax=1&_=1516447931224')
 
-#	print r.content
-	tree=html.fromstring(r.content.replace('\\',''))
+#	print r.text
+	tree=html.fromstring(r.text.replace('\\',''))
 
 	postURL=tree.xpath('//form/@action')
 	controller=tree.xpath('//input[@name="wl-selfsignup-controller"]/@value')
@@ -82,8 +82,8 @@ def createUser(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,ge
 
 	r = session.post(postURL[0], data=userData)
 
-#	print r.content
-	tree=html.fromstring(r.content.replace('\\',''))
+#	print r.text
+	tree=html.fromstring(r.text.replace('\\',''))
 
 	postURL=tree.xpath('//form/@action')
 	controller=tree.xpath('//input[@name="wl-selfsignup-controller"]/@value')
@@ -96,8 +96,8 @@ def createUser(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,ge
 
 	r = session.post(postURL[0],data=affirmData)
 
-#	print r.content
-	return r.content
+#	print r.text
+	return r.text
 
 def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gender,address,city,postal,location,signature,city_code=27495):
 
@@ -114,8 +114,8 @@ def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gen
 
 	r = session.post('https://www.wellnessliving.com/login/urbanevo',data=loginData)
 
-#	print r.content
-	tree=html.fromstring(r.content.replace('\\',''))
+#	print r.text
+	tree=html.fromstring(r.text.replace('\\',''))
 
 	links=tree.xpath("//a[contains(@href,'profile.html') and contains(@href,'uid')]/@href")
 
@@ -127,9 +127,9 @@ def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gen
 	#Request:
 	r = session.get(addProfileURL)
 
-#	print r.content
+#	print r.text
 
-	tree=html.fromstring(r.content.replace('\\',''))
+	tree=html.fromstring(r.text.replace('\\',''))
 	postURL=tree.xpath('//form/@action')
 	controller=tree.xpath('//input[@name="rs-profile-edit"]/@value')
 
@@ -162,8 +162,8 @@ def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gen
 
 	r = session.post(postURL[0],data=addData)
 
-#	print r.content
-	tree=html.fromstring(r.content.replace('\\',''))
+#	print r.text
+	tree=html.fromstring(r.text.replace('\\',''))
 	links=tree.xpath("//a[contains(@href,'relative-login') and contains(@title,'"+fname+"')]/@href")
 
 	signInURL=links[0]
@@ -174,12 +174,12 @@ def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gen
 	#"sign in" as the added user
 	r = session.get(signInURL)
 
-#	print r.content
+#	print r.text
 	#now get the waiver form for the new user
 	r = session.get('https://www.wellnessliving.com/rs/login-agree.html')
 
-#	print r.content
-	tree=html.fromstring(r.content.replace('\\',''))
+#	print r.text
+	tree=html.fromstring(r.text.replace('\\',''))
 
 	postURL='https://www.wellnessliving.com/a/ajax.html'
 
@@ -195,8 +195,8 @@ def addMember(fname,lname,email,pwd,phone,phoneHome,phoneWork,month,day,year,gen
 
 	r = session.post(postURL,data=affirmData)
 
-#	print r.content
-	return r.content
+#	print r.text
+	return r.text
 
 @application.route("/city/<string:cityName>")
 def getCities(cityName):
