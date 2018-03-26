@@ -282,7 +282,7 @@ def createAccount():
 
 		checkEmail=verifyEmail(content["email"])
 
-		print checkEmail
+		print(checkEmail)
 
 		if "s_message" in checkEmail or "already" in checkEmail:
 
@@ -292,7 +292,7 @@ def createAccount():
 
 			userResult=createUser(content["fname"],content["lname"],content["email"],content["pwd"],content["phone"],content["phoneHome"],content["phoneWork"],content["month"],content["day"],content["year"],content["gender"],content["address"],content["city"],content["postal"],content["location"],content["signature"],content["city_code"])
 
-	#		print userResult
+	#		print(userResult)
 
 			memberResult=[]
 
