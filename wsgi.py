@@ -203,7 +203,7 @@ def getCities(cityName):
     cityName.replace('_', ' ')
     session = requests.Session()
     webdata = session.get('https://www.wellnessliving.com/a/combobox.html?a-ajax=1&s_id=city&s_name=k_city&s_unit=a.geo&s_value=' + cityName + '&a-ajax=1')
-    longString = webdata.content
+    longString = webdata.text
     cityDict = {}
                               
 
